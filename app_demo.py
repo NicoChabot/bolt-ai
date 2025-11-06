@@ -3,17 +3,48 @@ from prompt_parser import PromptParser
 from bolt_agent import BoltAgent
 from excel_sap_integrator import ExcelSapIntegrator
 from bolt_exception import BoltException
+import base64
+import os
 
+# ===========================
+# Configuração da página
+# ===========================
+st.set_page_config(page_title="Agente Bolt", page_icon="🤖", layout="wide")
 
-st.image("bolt.png", width=100) 
+# ===========================
+# Cabeçalho com imagem e título
+# ===========================
+bolt_image_path = "bolt.png"  
 
-st.title("Agente Bolt - Sistema de Materiais")
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
 
+if os.path.exists(bolt_image_path):
+    bolt_image_base64 = get_base64_image(bolt_image_path)
+    st.markdown(
+        f"""
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="data:image/png;base64,{bolt_image_base64}" width="70" style="border-radius: 10px;">
+            <h1 style="margin: 0;">Agente Bolt - Sistema de Materiais</h1>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.markdown("## 🤖 Agente Bolt - Sistema de Materiais")
+
+# ===========================
+# Estado do chat
+# ===========================
 if "state" not in st.session_state:
     st.session_state.state = "menu"
 if "choice" not in st.session_state:
     st.session_state.choice = None
 
+# ===========================
+# Inicialização do agente
+# ===========================
 integrator = ExcelSapIntegrator(
     material_file="AGENTE_BaseCaracteristicasDosMateriais (1).XLSX",
     sales_file="AGENTE_BaseFaturamento (1).XLSX"
@@ -21,10 +52,13 @@ integrator = ExcelSapIntegrator(
 parser = PromptParser()
 agent = BoltAgent(parser, integrator)
 
+# ===========================
+# Interface do agente (chat)
+# ===========================
 st.markdown("**Bolt:** Olá! Sou o Agente Bolt. Escolha uma opção:")
 st.markdown("1️⃣ Pesquisar material  \n2️⃣ Cadastrar novo material  \n3️⃣ Agrupar material  \n4️⃣ Pesquisar venda")
 
-user_input = st.text_input("**Digite sua opção ou mensagem:**", key="user_input")
+user_input = st.chat_input("Digite sua opção ou mensagem:", key="user_input", disabled=False)
 
 if user_input:
     try:
@@ -89,13 +123,3 @@ if user_input:
     except Exception as e:
         st.error(f"**Erro inesperado:** {e}")
         st.session_state.state = "menu"
-
-
-
-
-
-
-
-
-
-
