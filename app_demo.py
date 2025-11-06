@@ -5,7 +5,7 @@ from excel_sap_integrator import ExcelSapIntegrator
 from bolt_exception import BoltException
 
 # Caminho da imagem do bot
-st.image("bolt.png", width=100, height=100) 
+st.image("bolt.png", width=100) 
 
 st.title("Agente Bolt - Sistema de Materiais")
 
@@ -91,6 +91,7 @@ if user_input:
     except Exception as e:
         st.error(f"**Erro inesperado:** {e}")
         st.session_state.state = "menu"
+
 
 
 
