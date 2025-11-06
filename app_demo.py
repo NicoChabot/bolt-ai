@@ -17,7 +17,7 @@ if "choice" not in st.session_state:
 
 # Inicializa o integrador e agente
 integrator = ExcelSapIntegrator(
-    material_file="AGENTE_BaseCaracteristicasDosMateriais (1).xlsx",
+    material_file="AGENTE_BaseCaracteristicasDosMateriais (1).XLSX",
     sales_file="AGENTE_BaseFaturamento (1).xlsx"
 )
 parser = PromptParser()
@@ -91,4 +91,5 @@ if user_input:
     except Exception as e:
         st.error(f"**Erro inesperado:** {e}")
         st.session_state.state = "menu"
+
 
