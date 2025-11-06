@@ -1,0 +1,22 @@
+# BoltAI Agent - dependências do projeto
+
+# Interface e execução
+streamlit==1.39.0
+
+# Manipulação de dados e planilhas
+pandas==2.2.3
+openpyxl==3.1.5
+numpy==1.26.4
+
+# Tipagem e validações
+typing-extensions==4.12.2
+
+# Leitura e manipulação de arquivos Excel com segurança
+et-xmlfile==1.1.0
+
+# Compatibilidade geral com pandas/openpyxl em ambientes Streamlit Cloud
+python-dateutil==2.9.0.post0
+pytz==2024.1
+
+# (Opcional mas recomendado) Para logs e mensagens de erro formatadas
+rich==13.7.1
