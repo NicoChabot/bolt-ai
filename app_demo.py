@@ -7,7 +7,7 @@ from bolt_exception import BoltException
 # Caminho da imagem do bot
 st.image("bolt.png", width=90)
 
-st.title("🤖 Agente Bolt - Sistema de Materiais")
+st.title(st.image("bolt.png", width=90) "Agente Bolt - Sistema de Materiais")
 
 # Inicialização de estado
 if "state" not in st.session_state:
@@ -91,6 +91,7 @@ if user_input:
     except Exception as e:
         st.error(f"**Erro inesperado:** {e}")
         st.session_state.state = "menu"
+
 
 
 
