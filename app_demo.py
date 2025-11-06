@@ -5,9 +5,25 @@ from excel_sap_integrator import ExcelSapIntegrator
 from bolt_exception import BoltException
 
 # Caminho da imagem do bot
-st.image("bolt.png", width=100) 
+bolt_image_path = "bolt.png"
 
-st.title("Agente Bolt - Sistema de Materiais")
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+if os.path.exists(bolt_image_path):
+    bolt_image_base64 = get_base64_image(bolt_image_path)
+    st.markdown(
+        f"""
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="data:image/png;base64,{bolt_image_base64}" width="70" style="border-radius: 10px;">
+            <h1 style="margin: 0;">Agente Bolt - Sistema de Materiais</h1>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.markdown("## 🤖 Agente Bolt - Sistema de Materiais")
 
 # Inicialização de estado
 if "state" not in st.session_state:
@@ -26,7 +42,7 @@ agent = BoltAgent(parser, integrator)
 st.markdown("**Bolt:** Olá! Sou o Agente Bolt. Escolha uma opção:")
 st.markdown("1️⃣ Pesquisar material  \n2️⃣ Cadastrar novo material  \n3️⃣ Agrupar material  \n4️⃣ Pesquisar venda")
 
-user_input = st.text_input("**Digite sua opção ou mensagem:**", key="user_input")
+user_input = st.text_input("**Digite sua opção ou mensagem:**", key="user_input", clear_on_submit=True)
 
 if user_input:
     try:
@@ -91,6 +107,7 @@ if user_input:
     except Exception as e:
         st.error(f"**Erro inesperado:** {e}")
         st.session_state.state = "menu"
+
 
 
 
